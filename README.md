@@ -21,8 +21,16 @@ make
 
 ## Usage
 
+### Encryption
+
 ```console
-encrypter [file or directory path]
+encrypt [file or directory path]
+```
+
+### Decryption
+
+```console
+decrypt [file or directory path]
 ```
 
 ## Algorithm
