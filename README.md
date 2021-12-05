@@ -36,14 +36,16 @@ decrypt [file or directory path]
 
 ## Algorithm
 
-- encryption/decryption: AES256
-- archive/extraction: tar
-- compression/decompression: gzip
-
-## Author
-
-[haru52](https://haru52.com/)
+| Type | Algorithm |
+|-|-|
+| encryption/decryption | AES256 |
+| archive/extraction | tar |
+| compression/decompression | gzip |
 
 ## License
 
 TBD.
+
+## Author
+
+[haru52](https://haru52.com/)
