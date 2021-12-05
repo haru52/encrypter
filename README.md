@@ -44,7 +44,7 @@ decrypt [file or directory path]
 
 ## License
 
-TBD.
+[MIT License](LICENSE)
 
 ## Author
 
