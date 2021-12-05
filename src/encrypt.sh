@@ -18,22 +18,43 @@ error_with_help () {
   exit 1
 }
 
-if [ $# != "1" ]; then
+encrypt_with_aes256 () {
+  target_path=$1
+  gpg -c --cipher-algo AES256 --no-symkey-cach $target_path
+}
+
+if [ $# -ne 1 ]; then
   error_with_help "Incorrect number of arguments."
 fi
 
 target_path=$1
 
 if [ ! -e $target_path ]; then
-  error_with_help "Specified file or directory doesn't exist."
+  error_with_help "Specified file or directory does not exist."
 fi
 
 if [ -d $target_path ]; then
-  new_target_path=$target_path.tar.gz
-  tar cf $new_target_path $target_path
-  rm -rf $target_path
-  target_path=$new_target_path
-fi
+  archived_target_path=$target_path.tar.gz
+  tar cf $archived_target_path $target_path
 
-gpg -c --cipher-algo AES256 --no-symkey-cach $target_path
-rm -f $target_path
+  if [ $? -ne 0 ]; then
+    error "Archive failed."
+  fi
+
+  encrypt_with_aes256 $archived_target_path
+
+  if [ $? -ne 0 ]; then
+    rm -f $archived_target_path
+    error "Encryption failed."
+  fi
+
+  rm -rf $target_path
+else
+  encrypt_with_aes256 $target_path
+
+  if [ $? -ne 0 ]; then
+    error "Encryption failed."
+  fi
+
+  rm -f $target_path
+fi

@@ -18,38 +18,38 @@ error_with_help () {
   exit 1
 }
 
-if [ $# != "1" ]; then
+if [ $# -ne 1 ]; then
   error_with_help "Incorrect number of arguments."
 fi
 
 target_path=$1
 
 if [ ! -e $target_path ]; then
-  error_with_help "Specified file or directory doesn't exist."
+  error_with_help "Specified file or directory does not exist."
 fi
 
 if [ ${target_path##*.} != "gpg" ]; then
   error_with_help "Unsupported file format."
 fi
 
-decrypted_target_path=`echo $target_path | sed 's/\.[^\.]*$//'`
-
+decrypted_target_path=`echo $target_path | sed 's/\.gpg$//'`
 gpg -o $decrypted_target_path -d $target_path
 
 if [ $? -ne 0 ]; then
   error "Decryption failed."
 fi
 
-rm -f $target_path
-
 case $decrypted_target_path in
   *\.tar.gz)
     tar xf $decrypted_target_path
 
     if [ $? -ne 0 ]; then
+      rm -f $decrypted_target_path
       error "Extraction failed."
     fi
 
     rm -f $decrypted_target_path
     ;;
 esac
+
+rm -f $target_path
