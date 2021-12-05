@@ -48,4 +48,4 @@ decrypt [file or directory path]
 
 ## Author
 
-[haru52](https://haru52.com/)
+[haru](https://haru52.com/)
