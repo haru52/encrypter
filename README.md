@@ -8,7 +8,6 @@ Encrypter is the encryption UNIX/Linux CLI command. Encrypter can encrypt a file
 
 - UNIX/Linux (includes WSL and macOS)
 - tar
-- gzip
 - [GnuPG (GPG)](https://gnupg.org/)
 
 ## Installation
@@ -16,7 +15,7 @@ Encrypter is the encryption UNIX/Linux CLI command. Encrypter can encrypt a file
 ```console
 git clone git@github.com:haru52/encrypter.git
 cd encrypter
-make
+make install
 ```
 
 ## Usage
@@ -25,12 +24,14 @@ make
 
 ```console
 encrypt [file or directory path]
+# Enter password.
 ```
 
 ### Decryption
 
 ```console
 decrypt [file or directory path]
+# Enter password.
 ```
 
 ## Algorithm
