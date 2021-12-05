@@ -19,8 +19,8 @@ error_with_help () {
 }
 
 encrypt_with_aes256 () {
-  target_path=$1
-  gpg -c --cipher-algo AES256 --no-symkey-cach $target_path
+  encrypt_target_path=$1
+  gpg -c --cipher-algo AES256 --no-symkey-cach $encrypt_target_path
 }
 
 if [ $# -ne 1 ]; then
@@ -48,6 +48,7 @@ if [ -d $target_path ]; then
     error "Encryption failed."
   fi
 
+  rm -f $archived_target_path
   rm -rf $target_path
 else
   encrypt_with_aes256 $target_path

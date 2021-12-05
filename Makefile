@@ -1,1 +1,2 @@
-install: encrypt decrypt
+install:
+	./bin/install.sh
