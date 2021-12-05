@@ -4,7 +4,7 @@ mkdir -p ~/bin
 ln -sf `pwd`/dist/encrypt ~/bin/encrypt
 ln -sf `pwd`/dist/decrypt ~/bin/decrypt
 
-if [ ! `echo $PATH | grep -e "$HOME/bin:" -e ":$HOME/bin"` ]; then
+if [ `echo $PATH | grep -e "$HOME/bin:" -e ":$HOME/bin"` ]; then
   exit 0
 fi
 
