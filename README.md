@@ -2,7 +2,7 @@
 
 ## Overview
 
-Encrypter is the encryption UNIX/Linux CLI command. Encrypter can encrypt a file or a directory. Of course, Encrypter can also decrypt a file or a directory that encrypted by Encrypter!
+Encrypter is the encryption UNIX/Linux CLI command. Encrypter can encrypt a file or a directory. Of course Encrypter can also decrypt a file or a directory that encrypted by Encrypter!
 
 ## Requirement
 
