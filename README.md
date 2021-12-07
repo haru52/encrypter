@@ -20,10 +20,6 @@ make install
 
 ## Usage
 
-  echo "       $ encrypt [file or directory path] [recipient]"
-  echo "       $ encrypt pub [file or directory path] [recipient]"
-  echo "       $ encrypt sym [file or directory path]"
-
 ### Public key encryption
 
 ```console
