@@ -22,8 +22,13 @@ error_with_help () {
 }
 
 encrypt_with_aes256 () {
-  encrypt_target_path=$1
-  gpg -c --cipher-algo AES256 --no-symkey-cach $encrypt_target_path
+  raw_target_path=$1
+  gpg -c --cipher-algo AES256 --no-symkey-cach $raw_target_path
+
+  # # encrypt with OpenSSL
+  # raw_target_path=$1
+  # encrypted_target_path="$raw_target_path.enc"
+  # openssl aes-256-cbc -e -in $raw_target_path -out $encrypted_target_path
 }
 
 if [ $# -ne 2 ] && [ $# -ne 3 ]; then
@@ -75,7 +80,28 @@ case $enc_type in
     fi
     ;;
   "sym")
-    # TODO: OpenSSLを用いて共通鍵暗号化
-    error_with_help "Sorry, sym command is not supported yet."
+    if [ -d $target_path ]; then
+      archived_target_path=$target_path.tar.gz
+      tar -zcf $archived_target_path $target_path
+
+      if [ $? -ne 0 ]; then
+        error "Archive failed."
+      fi
+
+      encrypt_with_aes256 $archived_target_path
+
+      if [ $? -ne 0 ]; then
+        rm -f $archived_target_path
+        error "Encryption failed."
+      fi
+
+      rm -f $archived_target_path
+    else
+      encrypt_with_aes256 $target_path
+
+      if [ $? -ne 0 ]; then
+        error "Encryption failed."
+      fi
+    fi
     ;;
 esac
