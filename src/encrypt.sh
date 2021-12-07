@@ -14,7 +14,10 @@ error () {
 error_with_help () {
   error_msg=$1
   print_error_msg "$error_msg"
-  echo "Usage: $ encrypt [file or directory path]"
+  echo "Usage:"
+  echo "       $ encrypt [file or directory path] [recipient]"
+  echo "       $ encrypt pub [file or directory path] [recipient]"
+  echo "       $ encrypt sym [file or directory path]"
   exit 1
 }
 
@@ -23,39 +26,56 @@ encrypt_with_aes256 () {
   gpg -c --cipher-algo AES256 --no-symkey-cach $encrypt_target_path
 }
 
-if [ $# -ne 1 ]; then
+if [ $# -ne 2 ] || [ $# -ne 3 ]; then
   error_with_help "Incorrect number of arguments."
 fi
 
-target_path=$1
+if [ $1 != "pub" ] && [ $1 != "sym" ] ; then
+  enc_type="pub"
+else
+  enc_type=$1
+fi
+
+case $enc_type in
+  "pub")
+    case $# in
+      2)
+        target_path=$1
+        recipient=$2
+        ;;
+      3)
+        target_path=$2
+        recipient=$3
+        ;;
+    esac
+    ;;
+  "sym")
+    target_path=$2
+    ;;
+  *)
+    error_with_help "Invalid encryption type."
+    ;;
+esac
 
 if [ ! -e $target_path ]; then
   error_with_help "Specified file or directory does not exist."
 fi
 
-if [ -d $target_path ]; then
-  archived_target_path=$target_path.tar.gz
-  tar cf $archived_target_path $target_path
+case $enc_type in
+  "pub")
+    encrypted_target_path="$target_path.gpg"
+    if [ -d $target_path ]; then
+      gpgtar -e -r $recipient -o $encrypted_target_path $target_path
+    else
+      gpg -e -r $recipient -o $encrypted_target_path $target_path
+    fi
 
-  if [ $? -ne 0 ]; then
-    error "Archive failed."
-  fi
-
-  encrypt_with_aes256 $archived_target_path
-
-  if [ $? -ne 0 ]; then
-    rm -f $archived_target_path
-    error "Encryption failed."
-  fi
-
-  rm -f $archived_target_path
-  rm -rf $target_path
-else
-  encrypt_with_aes256 $target_path
-
-  if [ $? -ne 0 ]; then
-    error "Encryption failed."
-  fi
-
-  rm -f $target_path
-fi
+    if [ $? -ne 0 ]; then
+      error "Encryption failed."
+    fi
+    ;;
+  "sym")
+    # TODO: OpenSSLを用いて共通鍵暗号化
+    error_with_help "Sorry, sym command is not supported yet."
+    ;;
+esac
