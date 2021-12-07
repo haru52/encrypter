@@ -66,7 +66,7 @@ decrypt sym [file or directory path]
 
 | Type | Algorithm |
 |-|-|
-| public key cryptosystem | depends on the recipient's GPG key |
+| public key cryptosystem | depends on the recipient's GPG key (e.g., RSA) |
 | symmetric key cryptosystem | AES256 |
 | archive/extraction | tar |
 | compression/decompression | gzip |
