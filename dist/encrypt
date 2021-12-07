@@ -36,12 +36,12 @@ if [ $# -ne 2 ] && [ $# -ne 3 ]; then
 fi
 
 if [ $1 != "pub" ] && [ $1 != "sym" ] ; then
-  enc_type="pub"
+  crypto_type="pub"
 else
-  enc_type=$1
+  crypto_type=$1
 fi
 
-case $enc_type in
+case $crypto_type in
   "pub")
     case $# in
       2)
@@ -58,7 +58,7 @@ case $enc_type in
     target_path=$2
     ;;
   *)
-    error_with_help "Invalid encryption type."
+    error_with_help "Invalid cryptographic mode command."
     ;;
 esac
 
@@ -66,7 +66,7 @@ if [ ! -e $target_path ]; then
   error_with_help "Specified file or directory does not exist."
 fi
 
-case $enc_type in
+case $crypto_type in
   "pub")
     encrypted_target_path="$target_path.gpg"
     if [ -d $target_path ]; then
