@@ -26,7 +26,7 @@ encrypt_with_aes256 () {
   gpg -c --cipher-algo AES256 --no-symkey-cach $encrypt_target_path
 }
 
-if [ $# -ne 2 ] || [ $# -ne 3 ]; then
+if [ $# -ne 2 ] && [ $# -ne 3 ]; then
   error_with_help "Incorrect number of arguments."
 fi
 
