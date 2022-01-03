@@ -62,6 +62,10 @@ decrypt sym [file or directory path]
 # Enter password.
 ```
 
+### Caution
+
+DON'T change the extension of the encrypted file name (e.g., `.gpg`, `.tar.gz.gpg`)!
+
 ## Algorithm
 
 | Type | Algorithm |
