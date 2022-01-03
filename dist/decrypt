@@ -51,5 +51,3 @@ case $decrypted_target_path in
     rm -f $decrypted_target_path
     ;;
 esac
-
-rm -f $target_path

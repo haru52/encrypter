@@ -26,7 +26,7 @@ make install
 encrypt [file or directory path] [recipient]
 ```
 
-Alternatively, you can also specify the cryptographic mode command explicitly.
+Alternatively, you can specify the cryptographic mode command explicitly.
 
 ```console
 encrypt pub [file or directory path] [recipient]

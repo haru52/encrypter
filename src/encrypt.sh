@@ -15,20 +15,28 @@ error_with_help () {
   error_msg=$1
   print_error_msg "$error_msg"
   echo "Usage:"
-  echo "       $ encrypt [file or directory path] [recipient]"
-  echo "       $ encrypt pub [file or directory path] [recipient]"
-  echo "       $ encrypt sym [file or directory path]"
+  echo "$ encrypt [file or directory path] [recipient]"
+  echo "$ encrypt pub [file or directory path] [recipient]"
+  echo "$ encrypt sym [file or directory path]"
   exit 1
 }
 
-encrypt_with_aes256 () {
-  raw_target_path=$1
-  gpg -c --cipher-algo AES256 --no-symkey-cach $raw_target_path
+archive_with_tgz () {
+  a_archived_target_path=$1
+  a_target_path=$2
+  tar -zcf $a_archived_target_path $a_target_path
+}
 
-  # # encrypt with OpenSSL
-  # raw_target_path=$1
-  # encrypted_target_path="$raw_target_path.enc"
-  # openssl aes-256-cbc -e -in $raw_target_path -out $encrypted_target_path
+encrypt_with_gpg () {
+  a_recipient=$1
+  a_encrypted_target_path=$2
+  a_target_path=$3
+  gpg -e -r $a_recipient -o $a_encrypted_target_path $a_target_path
+}
+
+encrypt_with_aes256 () {
+  a_target_path=$1
+  gpg -c --cipher-algo AES256 --no-symkey-cach $a_target_path
 }
 
 if [ $# -ne 2 ] && [ $# -ne 3 ]; then
@@ -68,11 +76,24 @@ fi
 
 case $crypto_type in
   "pub")
-    encrypted_target_path="$target_path.gpg"
     if [ -d $target_path ]; then
-      gpgtar -e -r $recipient -o $encrypted_target_path $target_path
+      archived_target_path=$target_path.tar.gz
+      archive_with_tgz $archived_target_path $target_path
+
+      if [ $? -ne 0 ]; then
+        error "Archive failed."
+      fi
+
+      encrypt_with_gpg $recipient $archived_target_path.gpg $archived_target_path
+
+      if [ $? -ne 0 ]; then
+        rm -f $archived_target_path
+        error "Encryption failed."
+      fi
+
+      rm -f $archived_target_path
     else
-      gpg -e -r $recipient -o $encrypted_target_path $target_path
+      encrypt_with_gpg $recipient $target_path.gpg $target_path
     fi
 
     if [ $? -ne 0 ]; then
@@ -82,7 +103,7 @@ case $crypto_type in
   "sym")
     if [ -d $target_path ]; then
       archived_target_path=$target_path.tar.gz
-      tar -zcf $archived_target_path $target_path
+      archive_with_tgz $archived_target_path $target_path
 
       if [ $? -ne 0 ]; then
         error "Archive failed."
