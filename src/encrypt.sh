@@ -22,21 +22,21 @@ error_with_help () {
 }
 
 archive_with_tgz () {
-  a_archived_target_path=$1
-  a_target_path=$2
-  tar -zcf $a_archived_target_path $a_target_path
+  p_archived_target_path=$1
+  p_target_path=$2
+  tar -zcf $p_archived_target_path $p_target_path
 }
 
 encrypt_with_gpg () {
-  a_recipient=$1
-  a_encrypted_target_path=$2
-  a_target_path=$3
-  gpg -e -r $a_recipient -o $a_encrypted_target_path $a_target_path
+  p_recipient=$1
+  p_encrypted_target_path=$2
+  p_target_path=$3
+  gpg -e -r $p_recipient -o $p_encrypted_target_path $p_target_path
 }
 
 encrypt_with_aes256 () {
-  a_target_path=$1
-  gpg -c --cipher-algo AES256 --no-symkey-cach $a_target_path
+  p_target_path=$1
+  gpg -c --cipher-algo AES256 --no-symkey-cach $p_target_path
 }
 
 if [ $# -ne 2 ] && [ $# -ne 3 ]; then
