@@ -24,14 +24,13 @@ error_with_help () {
 archive_with_tgz () {
   p_archived_target_path=$1
   p_target_path=$2
-  tar -zcf $p_archived_target_path $p_target_path
+  tar -czf $p_archived_target_path $p_target_path
 }
 
 encrypt_with_gpg () {
   p_recipient=$1
-  p_encrypted_target_path=$2
-  p_target_path=$3
-  gpg -e -r $p_recipient -o $p_encrypted_target_path $p_target_path
+  p_target_path=$2
+  gpg -e -r $p_recipient $p_target_path
 }
 
 encrypt_with_aes256 () {
@@ -84,7 +83,7 @@ case $crypto_type in
         error "Archive failed."
       fi
 
-      encrypt_with_gpg $recipient $archived_target_path.gpg $archived_target_path
+      encrypt_with_gpg $recipient $archived_target_path
 
       if [ $? -ne 0 ]; then
         rm -f $archived_target_path
@@ -93,7 +92,7 @@ case $crypto_type in
 
       rm -f $archived_target_path
     else
-      encrypt_with_gpg $recipient $target_path.gpg $target_path
+      encrypt_with_gpg $recipient $target_path
     fi
 
     if [ $? -ne 0 ]; then

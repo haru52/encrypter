@@ -41,7 +41,7 @@ fi
 
 case $decrypted_target_path in
   *\.tar.gz)
-    tar xf $decrypted_target_path
+    tar -xf $decrypted_target_path
 
     if [ $? -ne 0 ]; then
       rm -f $decrypted_target_path
