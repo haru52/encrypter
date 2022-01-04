@@ -66,6 +66,13 @@ decrypt sym [file or directory path]
 
 DON'T change the extension of the encrypted file name (e.g., `.gpg`, `.tar.gz.gpg`)!
 
+## Update
+
+```console
+# Move to the encrypter local repository directory.
+git pull
+```
+
 ## Algorithm
 
 | Type | Algorithm |
