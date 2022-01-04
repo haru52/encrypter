@@ -1,19 +1,19 @@
 #!/bin/sh
 
 print_error_msg () {
-  error_msg=$1
-  echo "Error!: $error_msg"
+  _error_msg=$1
+  echo "Error!: $_error_msg"
 }
 
 error () {
-  error_msg=$1
-  print_error_msg "$error_msg"
+  _error_msg=$1
+  print_error_msg "$_error_msg"
   exit 1
 }
 
 error_with_help () {
-  error_msg=$1
-  print_error_msg "$error_msg"
+  _error_msg=$1
+  print_error_msg "$_error_msg"
   echo "Usage: $ decrypt [file or directory path]"
   exit 1
 }

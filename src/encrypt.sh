@@ -1,19 +1,19 @@
 #!/bin/sh
 
 print_error_msg () {
-  error_msg=$1
-  echo "Error!: $error_msg"
+  _error_msg=$1
+  echo "Error!: $_error_msg"
 }
 
 error () {
-  error_msg=$1
-  print_error_msg "$error_msg"
+  _error_msg=$1
+  print_error_msg "$_error_msg"
   exit 1
 }
 
 error_with_help () {
-  error_msg=$1
-  print_error_msg "$error_msg"
+  _error_msg=$1
+  print_error_msg "$_error_msg"
   echo "Usage:"
   echo "$ encrypt [file or directory path] [recipient]"
   echo "$ encrypt pub [file or directory path] [recipient]"
@@ -22,20 +22,20 @@ error_with_help () {
 }
 
 archive_with_tgz () {
-  p_archived_target_path=$1
-  p_target_path=$2
-  tar -czf $p_archived_target_path $p_target_path
+  _archived_target_path=$1
+  _target_path=$2
+  tar -czf $_archived_target_path $_target_path
 }
 
 encrypt_with_gpg () {
-  p_recipient=$1
-  p_target_path=$2
-  gpg -e -r $p_recipient $p_target_path
+  _recipient=$1
+  _target_path=$2
+  gpg -e -r $_recipient $_target_path
 }
 
 encrypt_with_aes256 () {
-  p_target_path=$1
-  gpg -c --cipher-algo AES256 --no-symkey-cach $p_target_path
+  _target_path=$1
+  gpg -c --cipher-algo AES256 --no-symkey-cach $_target_path
 }
 
 if [ $# -ne 2 ] && [ $# -ne 3 ]; then
