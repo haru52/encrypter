@@ -4,11 +4,13 @@
 
 Encrypter is the encryption UNIX/Linux CLI command. Encrypter can encrypt a file or a directory. Of course Encrypter can also decrypt a file or a directory that encrypted by Encrypter!
 
+Encrypter depends on [GnuPG (GPG)](https://gnupg.org/). If you are not familiar with GPG, I recommend to read the followig GitHub Docs: [Managing commit signature verification - GitHub Docs](https://docs.github.com/en/authentication/managing-commit-signature-verification).
+
 ## Requirement
 
 - UNIX/Linux (includes WSL and macOS)
 - tar
-- [GnuPG (GPG)](https://gnupg.org/)
+- GPG
 
 ## Installation
 
@@ -26,7 +28,7 @@ make install
 encrypt [file or directory path] [recipient]
 ```
 
-Alternatively, you can specify the cryptographic mode command explicitly.
+Alternatively, you can specify the cryptographic mode explicitly. The following command outputs the same result as the previous command.
 
 ```console
 encrypt pub [file or directory path] [recipient]
@@ -57,7 +59,7 @@ decrypt [file or directory path]
 
 ### Caution
 
-DON'T change the extension of the encrypted file name (e.g., `.gpg`, `.tar.gz.gpg`)!
+DON'T change the extension of the encrypted file name! (`.gpg` or `.tar.gz.gpg`)
 
 ## Update
 
