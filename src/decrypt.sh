@@ -40,7 +40,7 @@ if [ $? -ne 0 ]; then
 fi
 
 case $decrypted_target_path in
-  *\.tar.gz)
+  *\.tar)
     tar -xf $decrypted_target_path
 
     if [ $? -ne 0 ]; then

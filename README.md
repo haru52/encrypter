@@ -59,7 +59,7 @@ decrypt [file or directory path]
 
 ### Caution
 
-DON'T change the extension of the encrypted file name! (`.gpg` or `.tar.gz.gpg`)
+DON'T change the extension of the encrypted file name! (`.gpg` or `.tar.gpg`)
 
 ## Update
 
@@ -75,7 +75,6 @@ git pull
 | public key cryptosystem | depends on the recipient's GPG key (e.g., RSA) |
 | symmetric key cryptosystem | AES256 |
 | archive/extraction | tar |
-| compression/decompression | gzip |
 
 ## License
 

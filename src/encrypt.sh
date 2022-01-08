@@ -21,10 +21,10 @@ error_with_help () {
   exit 1
 }
 
-archive_with_tgz () {
+archive_with_tar () {
   _archived_target_path=$1
   _target_path=$2
-  tar -czf $_archived_target_path $_target_path
+  tar -cf $_archived_target_path $_target_path
 }
 
 encrypt_with_gpg () {
@@ -76,8 +76,8 @@ fi
 case $crypto_type in
   "pub")
     if [ -d $target_path ]; then
-      archived_target_path=$target_path.tar.gz
-      archive_with_tgz $archived_target_path $target_path
+      archived_target_path=$target_path.tar
+      archive_with_tar $archived_target_path $target_path
 
       if [ $? -ne 0 ]; then
         error "Archive failed."
@@ -101,8 +101,8 @@ case $crypto_type in
     ;;
   "sym")
     if [ -d $target_path ]; then
-      archived_target_path=$target_path.tar.gz
-      archive_with_tgz $archived_target_path $target_path
+      archived_target_path=$target_path.tar
+      archive_with_tar $archived_target_path $target_path
 
       if [ $? -ne 0 ]; then
         error "Archive failed."
