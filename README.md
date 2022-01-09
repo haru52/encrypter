@@ -2,7 +2,7 @@
 
 ## Overview
 
-Encrypter is the encryption UNIX/Linux CLI command. Encrypter can encrypt a file or a directory. Of course Encrypter can also decrypt a file or a directory that encrypted by Encrypter!
+Encrypter is the encryption UNIX/Linux CLI tool. Encrypter can encrypt a file or a directory. Of course Encrypter can also decrypt a file or a directory that encrypted by Encrypter!
 
 Encrypter depends on [GnuPG (GPG)](https://gnupg.org/). If you are not familiar with GPG, I recommend to read the followig GitHub Docs: [Managing commit signature verification - GitHub Docs](https://docs.github.com/en/authentication/managing-commit-signature-verification).
 
