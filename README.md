@@ -80,6 +80,10 @@ git pull
 
 [MIT License](LICENSE)
 
+## Contributing
+
+[Contributing Guideline](./CONTRIBUTING.md)
+
 ## Author
 
 [haru](https://haru52.com/)
