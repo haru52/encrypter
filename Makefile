@@ -1,4 +1,7 @@
-.PHONY: lint lint-sh update-gibo install
+.PHONY: install lint lint-sh update-gibo
+
+install:
+	./bin/install.sh
 
 lint: lint-sh
 
@@ -9,6 +12,3 @@ update-gi:
 	gibo update
 	cat .gitignore_custom >| .gitignore
 	gibo dump macOS Linux Windows VisualStudioCode JetBrains Vim Node >> .gitignore
-
-install:
-	./bin/install.sh
