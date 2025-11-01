@@ -3,12 +3,16 @@
 current_dir="$(pwd)"
 
 mkdir -p ~/bin
-ln -sf "${current_dir}"/src/encrypt.sh ~/bin/encrypt
-ln -sf "${current_dir}"/src/decrypt.sh ~/bin/decrypt
+ln -sfv "${current_dir}"/src/encrypt.sh ~/bin/encrypt
+ln -sfv "${current_dir}"/src/decrypt.sh ~/bin/decrypt
 
-if echo "${PATH}" | grep -q -e "${HOME}/bin:" -e ":${HOME}/bin"; then
-  exit 0
-fi
+case ":${PATH}:" in
+  *":${HOME}/bin:"*)
+    exit 0
+    ;;
+  *)
+    ;;
+esac
 
 shell_name="$(basename "${SHELL}")"
 
