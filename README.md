@@ -14,6 +14,8 @@ Encrypter depends on [GnuPG (GPG)](https://gnupg.org/). If you are not familiar 
 
 ## Installation
 
+The following method assumes that your default shell is bash or zsh. Otherwise, install manually without using the `make install` command (e.g., create a symbolic link to the shell script and add it to your PATH).
+
 ```console
 git clone git@github.com:haru52/encrypter.git
 cd encrypter
