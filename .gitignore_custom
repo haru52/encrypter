@@ -1,0 +1,17 @@
+### Custom
+
+# direnv
+.envrc
+.env
+
+# Vale
+/.github/styles/Microsoft/
+/.github/styles/write-good/
+
+# Claude Code
+.claude/settings.local.json
+
+# Serena
+.serena/
+
+
