@@ -1,25 +1,27 @@
 #!/bin/sh
 
-mkdir -p ~/bin
-ln -sf `pwd`/src/encrypt.sh ~/bin/encrypt
-ln -sf `pwd`/src/decrypt.sh ~/bin/decrypt
+current_dir="$(pwd)"
 
-if [ `echo $PATH | grep -e "$HOME/bin:" -e ":$HOME/bin"` ]; then
+mkdir -p ~/bin
+ln -sf "${current_dir}"/src/encrypt.sh ~/bin/encrypt
+ln -sf "${current_dir}"/src/decrypt.sh ~/bin/decrypt
+
+if echo "${PATH}" | grep -q -e "${HOME}/bin:" -e ":${HOME}/bin"; then
   exit 0
 fi
 
-shell_name=`basename $SHELL`
+shell_name="$(basename "${SHELL}")"
 
-case $shell_name in
+case ${shell_name} in
   "bash")
-    shell_rc_path="$HOME/.bashrc"
+    shell_rc_path="${HOME}/.bashrc"
     ;;
   "zsh")
-    shell_rc_path="$HOME/.zshrc"
+    shell_rc_path="${HOME}/.zshrc"
     ;;
   *)
-    shell_rc_path="$HOME/.bashrc"
+    shell_rc_path="${HOME}/.bashrc"
     ;;
 esac
 
-echo "export PATH=\$HOME/bin:\$PATH" >> $shell_rc_path
+echo "export PATH=\$HOME/bin:\$PATH" >> "${shell_rc_path}"
