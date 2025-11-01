@@ -38,6 +38,14 @@ if ! gpg -o "${decrypted_target_path}" -d "${target_path}"; then
 fi
 
 case ${decrypted_target_path} in
+  *\.tar.gz)
+    if ! tar -xzf "${decrypted_target_path}"; then
+      rm -f "${decrypted_target_path}"
+      error "Extraction failed."
+    fi
+
+    rm -f "${decrypted_target_path}"
+    ;;
   *\.tar)
     if ! tar -xf "${decrypted_target_path}"; then
       rm -f "${decrypted_target_path}"
