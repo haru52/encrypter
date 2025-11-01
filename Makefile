@@ -3,7 +3,7 @@
 lint: lint-sh
 
 lint-sh:
-	shellcheck src/**/*.sh
+	shellcheck --enable=all --severity=style src/*sh
 
 update-gi:
 	gibo update
