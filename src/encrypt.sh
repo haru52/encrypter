@@ -35,7 +35,7 @@ encrypt_with_gpg () {
 
 encrypt_with_aes256 () {
   _target_path=$1
-  gpg -c --cipher-algo AES256 --no-symkey-cach "${_target_path}"
+  gpg -c --cipher-algo AES256 --no-symkey-cache "${_target_path}"
 }
 
 if [ $# -ne 2 ] && [ $# -ne 3 ]; then
