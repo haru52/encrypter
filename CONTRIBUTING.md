@@ -24,6 +24,12 @@
 3. This repo maintainers will review the PR
 4. The maintainers will merge the PR branch if they approved it, otherwise they will close it without merging
 
+## Lint
+
+```sh
+make lint
+```
+
 ## Shell script coding standards
 
 <!-- vale Microsoft.Foreign = NO -->
