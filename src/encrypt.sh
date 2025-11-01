@@ -21,6 +21,52 @@ error_with_help () {
   exit 1
 }
 
+validate_path () {
+  _path=$1
+  # Check for path traversal attempts - only match actual path traversal patterns
+  case "${_path}" in
+    ../*|*/../*|*/..|\.\.)
+      error "Path traversal detected. Path must not contain directory traversal sequences."
+      ;;
+    */*)
+      # Path contains directory separators - validate it resolves within current directory or subdirectories
+      _path_dir=$(dirname "${_path}") || true
+      _path_base=$(basename "${_path}") || true
+      if ! _resolved_dir=$(cd "${_path_dir}" 2>/dev/null && pwd -P); then
+        error "Cannot resolve path directory: ${_path_dir}"
+      fi
+      _resolved_path="${_resolved_dir}/${_path_base}"
+      _current_dir=$(pwd -P) || error "Cannot get current directory"
+      case "${_resolved_path}" in
+        "${_current_dir}"*|"${_current_dir}")
+          ;;
+        *)
+          error "Path must be within the current directory or its subdirectories."
+          ;;
+      esac
+      ;;
+    *)
+      # Path without directory separators, acceptable
+      ;;
+  esac
+}
+
+validate_recipient () {
+  _recipient=$1
+  # Check for dangerous characters that could lead to command injection
+  case "${_recipient}" in
+    *[\;\&\|\$\`\\]*|*[\(\)]*|*[\<\>]*)
+      error "Invalid characters in recipient. Recipient must not contain: ; & | \$ \` \\ ( ) < >"
+      ;;
+    "")
+      error "Recipient cannot be empty."
+      ;;
+    *)
+      # Valid recipient
+      ;;
+  esac
+}
+
 archive_with_tar_gzip () {
   _archived_target_path=$1
   _target_path=$2
@@ -45,7 +91,7 @@ fi
 if [ "$1" != "pub" ] && [ "$1" != "sym" ] ; then
   crypto_type="pub"
 else
-  crypto_type=$1
+  crypto_type="$1"
 fi
 
 case ${crypto_type} in
@@ -74,6 +120,14 @@ esac
 
 if [ ! -e "${target_path}" ]; then
   error_with_help "Specified file or directory does not exist."
+fi
+
+# Validate path to prevent path traversal
+validate_path "${target_path}"
+
+# Validate recipient for public key encryption
+if [ "${crypto_type}" = "pub" ]; then
+  validate_recipient "${recipient}"
 fi
 
 case ${crypto_type} in
